@@ -32,20 +32,20 @@
         <div class="header_top">
           <div class="header_top_left">
             <ul class="top_nav">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="pages/contact.html">Contact</a></li>
+              <li><a href="{% url 'index' %}">Home</a></li>
+              <li><a href="{% url 'page_404' %}">About</a></li>
+              <li><a href="{% url 'contact' %}">Contact</a></li>
             </ul>
           </div>
           <div class="header_top_right">
-            <p>Friday, December 05, 2045</p>
+            <p>{{ date }}</p>
           </div>
         </div>
       </div>
       <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="header_bottom">
-          <div class="logo_area"><a href="index.html" class="logo"><img src="{% static 'images/logo.jpg' %}" alt=""></a></div>
-          <div class="add_banner"><a href="#"><img src="images/addbanner_728x90_V1.jpg" alt=""></a></div>
+          <div class="logo_area"><a href="#" class="logo"><img src="{% static 'images/logo.jpg' %}" alt=""></a></div>
+          <div class="add_banner"><a href="#"><img src="{% static 'images/addbanner_728x90_V1.jpg' %}" alt=""></a></div>
         </div>
       </div>
     </div>
@@ -57,12 +57,12 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav main_nav">
-          <li class="active"><a href="index.html"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
-          {% for ct in ctg %}
-          {% if ct.is_active %}
-            <li><a href="#">{{ ct.name }}</a></li>
-          {% endif %}
-          {% endfor %}
+          <li class="active"><a href="{% url 'index' %}"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
+           {% for ct in ctg %}
+              {% if ct.is_active %}
+                <li><a href="{% url 'ctg' ct.pk %}">{{ ct.name }}</a></li>
+            {% endif %}
+            {% endfor %}
         </ul>
       </div>
     </nav>
@@ -74,7 +74,7 @@
           <ul id="ticker01" class="news_sticker">
             {% for new in news %}
               {% if forloop.counter < 4 %}
-            <li><a href="#"><img src="{{ new.image.url }}" alt="">{{ new.title }}</a></li>
+            <li><a href=""><img src="{{ new.image.url }}" alt="">{{ new.title }}</a></li>
               {% endif %}
             {% endfor %}
           </ul>
@@ -118,7 +118,7 @@
             <ul class="latest_postnav">
               <li>
                 {% for new in news_lasts %}
-                {% if forloop.counter < 5 %}
+                {% if forloop.counter > 2 and forloop.counter < 7 %}
                 <div class="media"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{{new.image.url }}"> </a>
                   <div class="media-body"> <a href="pages/single_page.html" class="catg_title">{{ new.title }}</a> </div>
                 </div>
@@ -152,7 +152,7 @@
             <div class="single_post_content_right">
               <ul class="spost_nav">
                 {% for new in news_uzb %}
-                  {% if forloop.counter < 5 %}
+                  {% if forloop.counter > 1 and forloop.counter < 5 %}
                 <li>
                   <div class="media wow fadeInDown"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{{ new.image.url }}"> </a>
                     <div class="media-body"> <a href="pages/single_page.html" class="catg_title">{{ new.title }} </a> </div>
@@ -178,7 +178,7 @@
                 </ul>
                 <ul class="spost_nav">
                   {% for new in news_jahon %}
-                  {% if forloop.counter < 5 %}
+                    {% if forloop.counter > 1 and forloop.counter < 5 %}
                   <li>
                     <div class="media wow fadeInDown"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{{ new.image.url }}"> </a>
                       <div class="media-body"> <a href="pages/single_page.html" class="catg_title"> {{ new.title }}</a> </div>
@@ -200,7 +200,7 @@
                       <p>{{ news_jahon.0.short_description }}..</p>
                     </figure>
                     {% for new in news_iqt %}
-                      {% if forloop.counter < 5 %}
+                      {% if forloop.counter > 1 and forloop.counter < 5 %}
                   </li>
                 </ul>
                 <ul class="spost_nav">
@@ -220,7 +220,7 @@
             <h2><span>Photography</span></h2>
             <ul class="photograph_nav  wow fadeInDown">
               {% for new in news %}
-              {% if forloop.counter < 7 %}
+              {% if forloop.counter < 10 %}
               <li>
                 <div class="photo_grid">
                   <figure class="effect-layla"> <a class="fancybox-buttons" data-fancybox-group="button" href="{{ new.image.url }}" title="Photography Ttile 1"> <img src="{{ new.image.url }}" alt=""/></a> </figure>
@@ -245,7 +245,7 @@
             <div class="single_post_content_right">
               <ul class="spost_nav">
                 {% for new in news_sport %}
-                      {% if forloop.counter < 5 %}
+                      {% if forloop.counter > 1 and forloop.counter < 5 %}
                 <li>
                   <div class="media wow fadeInDown"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{{ new.image.url }}"> </a>
                     <div class="media-body"> <a href="pages/single_page.html" class="catg_title"> </a> {{ new.title }}</div>
@@ -264,7 +264,7 @@
           <div class="single_sidebar">
             <h2><span>Popular Post</span></h2>
             <ul class="spost_nav">
-              {% for new in news_sport %}
+              {% for new in popular_news %}
                       {% if forloop.counter < 5 %}
               <li>
                 <div class="media wow fadeInDown"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{{ new.image.url }}"> </a>
@@ -273,7 +273,6 @@
                 {% endif %}
                   {% endfor %}
               </li>
-
             </ul>
           </div>
           <div class="single_sidebar">
@@ -285,17 +284,16 @@
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane active" id="category">
                 <ul>
-                  <li class="cat-item"><a href="#">O‘zbekiston</a></li>
-                  <li class="cat-item"><a href="#">Jahon</a></li>
-                  <li class="cat-item"><a href="#">Iqtisodiyot</a></li>
-                  <li class="cat-item"><a href="#">Jamiyat</a></li>
-                  <li class="cat-item"><a href="#">Sport</a></li>
-
+                  {% for ct in ctg %}
+                  {% if ct.is_active %}
+                    <li class="cat-item"><a href="{% url 'ctg' ct.pk %}">{{ ct.name }}</a></li>
+                  {% endif %}
+                  {% endfor %}
                 </ul>
               </div>
               <div role="tabpanel" class="tab-pane" id="video">
                 <div class="vide_area">
-                  <iframe width="100%" height="250" src="https://www.youtube.com/channel/UCTAbErxvDbPvBmFgW2lF1Cg" frameborder="0" allowfullscreen></iframe>
+                  <iframe width="100%" height="250" src="https://www.youtube.com/embed/az6NibAUf7Y" frameborder="0" allowfullscreen></iframe>
                 </div>
               </div>
               <div role="tabpanel" class="tab-pane" id="comments">
@@ -326,7 +324,7 @@
           </div>
           <div class="single_sidebar wow fadeInDown">
             <h2><span>Sponsor</span></h2>
-            <a class="sideAdd" href="#"><img src="{{ new.image.url }}" alt=""></a> </div>
+            <a class="sideAdd" href="#"><img src="{{ news_sponsor.0.image.url }}" alt=""></a> </div>
           <div class="single_sidebar wow fadeInDown">
             <h2><span>Category Archive</span></h2>
             <select class="catgArchive">
@@ -362,11 +360,11 @@
           <div class="footer_widget wow fadeInDown">
             <h2>Tag</h2>
             <ul class="tag_nav">
-              <li><a href="#">O'zbekiston</a></li>
-              <li><a href="#">Jahon</a></li>
-              <li><a href="#">Iqtisodiyot</a></li>
-              <li><a href="#">Jamiyat</a></li>
-              <li><a href="#">Sport</a></li>
+              {% for ct in ctg %}
+              {% if ct.is_active %}
+                <li><a href="{% url 'ctg' ct.pk %}">{{ ct.name }}</a></li>
+            {% endif %}
+            {% endfor %}
 
             </ul>
           </div>

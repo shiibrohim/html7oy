@@ -22,3 +22,12 @@ class News(models.Model):
     def __str__(self):
         return f'{self.title}  {self.category.name}'
 
+
+class Sponsor(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField()
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
